@@ -1,0 +1,336 @@
+about:
+  date: October 19, 2024 16:46:55
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 11
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Contract:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: employee_id
+      required: true
+    - name: employer_id
+      required: true
+    - name: start_date
+      required: true
+    - name: end_date
+    description: Employment contracts detailing terms and conditions of employment.
+    info_list: Employment contracts detailing terms and conditions of employment.
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    - direction: toone
+      fks:
+      - employer_id
+      name: employer
+      resource: Employer
+    type: Contract
+    user_key: id
+  Employee:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: position
+    - name: id
+    description: Employee information required at the start of an employment relationship.
+    info_list: Employee information required at the start of an employment relationship.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - employee_id
+      name: ContractList
+      resource: Contract
+    - direction: tomany
+      fks:
+      - employee_id
+      name: EmployeeHealthInsuranceList
+      resource: EmployeeHealthInsurance
+    - direction: tomany
+      fks:
+      - employee_id
+      name: EmployeeTrainingList
+      resource: EmployeeTraining
+    - direction: tomany
+      fks:
+      - employee_id
+      name: EquipmentProvidedList
+      resource: EquipmentProvided
+    - direction: tomany
+      fks:
+      - employee_id
+      name: LeaveEntitlementList
+      resource: LeaveEntitlement
+    - direction: tomany
+      fks:
+      - employee_id
+      name: PayrollList
+      resource: Payroll
+    - direction: tomany
+      fks:
+      - employee_id
+      name: TaxDetailList
+      resource: TaxDetail
+    type: Employee
+    user_key: name
+  EmployeeHealthInsurance:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: employee_id
+      required: true
+    - name: insurance_id
+      required: true
+    description: Link table connecting employees to their health insurance plans.
+    info_list: Link table connecting employees to their health insurance plans.
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    - direction: toone
+      fks:
+      - insurance_id
+      name: insurance
+      resource: HealthInsurance
+    type: EmployeeHealthInsurance
+    user_key: id
+  EmployeeTraining:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: employee_id
+      required: true
+    - name: training_id
+      required: true
+    - name: completion_date
+    description: Link table connecting employees to their attended training programs.
+    info_list: Link table connecting employees to their attended training programs.
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    - direction: toone
+      fks:
+      - training_id
+      name: training
+      resource: TrainingProgram
+    type: EmployeeTraining
+    user_key: id
+  Employer:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: address
+    - name: id
+    description: Employers who have obligations when starting an employment relationship.
+    info_list: Employers who have obligations when starting an employment relationship.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - employer_id
+      name: ContractList
+      resource: Contract
+    - direction: tomany
+      fks:
+      - employer_id
+      name: WorkplaceSafetyList
+      resource: WorkplaceSafety
+    type: Employer
+    user_key: name
+  EquipmentProvided:
+    attributes:
+    - label: ' equipment_name*'
+      name: equipment_name
+      required: true
+      search: true
+      sort: true
+    - name: employee_id
+      required: true
+    - name: id
+    description: Equipment provided by employers to employees.
+    info_list: Equipment provided by employers to employees.
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    type: EquipmentProvided
+    user_key: equipment_name
+  HealthInsurance:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: provider
+      required: true
+    - name: policy_number
+      required: true
+    description: Health insurance details provided to employees.
+    info_list: Health insurance details provided to employees.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - insurance_id
+      name: EmployeeHealthInsuranceList
+      resource: EmployeeHealthInsurance
+    type: HealthInsurance
+    user_key: id
+  LeaveEntitlement:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: employee_id
+      required: true
+    - name: leave_days
+      required: true
+    description: Entitlement to leave for employees.
+    info_list: Entitlement to leave for employees.
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    type: LeaveEntitlement
+    user_key: id
+  Payroll:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: employee_id
+      required: true
+    - name: salary
+      required: true
+    - name: pay_date
+      required: true
+    description: Payroll details for processing salaries and wages.
+    info_list: Payroll details for processing salaries and wages.
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    type: Payroll
+    user_key: id
+  TaxDetail:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: employee_id
+      required: true
+    - name: tax_code
+      required: true
+    - name: tax_due_date
+    description: Tax information that employers must report and deduct.
+    info_list: Tax information that employers must report and deduct.
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    type: TaxDetail
+    user_key: id
+  TrainingProgram:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: duration_days
+      required: true
+    - name: id
+    description: Training programs that new employees may need to undertake.
+    info_list: Training programs that new employees may need to undertake.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - training_id
+      name: EmployeeTrainingList
+      resource: EmployeeTraining
+    type: TrainingProgram
+    user_key: name
+  WorkplaceSafety:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: employer_id
+      required: true
+    - name: safety_protocol
+      required: true
+    description: Safety measures and trainings provided by employers.
+    info_list: Safety measures and trainings provided by employers.
+    tab_groups:
+    - direction: toone
+      fks:
+      - employer_id
+      name: employer
+      resource: Employer
+    type: WorkplaceSafety
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

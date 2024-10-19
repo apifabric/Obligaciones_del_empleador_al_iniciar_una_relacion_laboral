@@ -1,0 +1,496 @@
+about:
+  date: October 19, 2024 16:46:55
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Contract:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: employee_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: employer_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: start_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: end_date
+      template: date
+      type: DATETIME
+    description: Employment contracts detailing terms and conditions of employment.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Employment contracts detailing terms and conditions of employment.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    - direction: toone
+      fks:
+      - employer_id
+      name: employer
+      resource: Employer
+    type: Contract
+  Employee:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: position
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Employee information required at the start of an employment relationship.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Employee information required at the start of an employment relationship.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - employee_id
+      name: ContractList
+      resource: Contract
+    - direction: tomany
+      fks:
+      - employee_id
+      name: EmployeeHealthInsuranceList
+      resource: EmployeeHealthInsurance
+    - direction: tomany
+      fks:
+      - employee_id
+      name: EmployeeTrainingList
+      resource: EmployeeTraining
+    - direction: tomany
+      fks:
+      - employee_id
+      name: EquipmentProvidedList
+      resource: EquipmentProvided
+    - direction: tomany
+      fks:
+      - employee_id
+      name: LeaveEntitlementList
+      resource: LeaveEntitlement
+    - direction: tomany
+      fks:
+      - employee_id
+      name: PayrollList
+      resource: Payroll
+    - direction: tomany
+      fks:
+      - employee_id
+      name: TaxDetailList
+      resource: TaxDetail
+    type: Employee
+  EmployeeHealthInsurance:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: employee_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: insurance_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Link table connecting employees to their health insurance plans.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Link table connecting employees to their health insurance plans.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    - direction: toone
+      fks:
+      - insurance_id
+      name: insurance
+      resource: HealthInsurance
+    type: EmployeeHealthInsurance
+  EmployeeTraining:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: employee_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: training_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: completion_date
+      template: date
+      type: DATETIME
+    description: Link table connecting employees to their attended training programs.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Link table connecting employees to their attended training programs.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    - direction: toone
+      fks:
+      - training_id
+      name: training
+      resource: TrainingProgram
+    type: EmployeeTraining
+  Employer:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: address
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Employers who have obligations when starting an employment relationship.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Employers who have obligations when starting an employment relationship.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - employer_id
+      name: ContractList
+      resource: Contract
+    - direction: tomany
+      fks:
+      - employer_id
+      name: WorkplaceSafetyList
+      resource: WorkplaceSafety
+    type: Employer
+  EquipmentProvided:
+    columns:
+    - label: ' equipment_name*'
+      name: equipment_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: employee_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Equipment provided by employers to employees.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: equipment_name
+    home_template: home_template.html
+    info_list: Equipment provided by employers to employees.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    type: EquipmentProvided
+  HealthInsurance:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: provider
+      required: true
+      template: text
+      type: VARCHAR
+    - name: policy_number
+      required: true
+      template: text
+      type: VARCHAR
+    description: Health insurance details provided to employees.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Health insurance details provided to employees.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - insurance_id
+      name: EmployeeHealthInsuranceList
+      resource: EmployeeHealthInsurance
+    type: HealthInsurance
+  LeaveEntitlement:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: employee_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: leave_days
+      required: true
+      template: integer
+      type: INTEGER
+    description: Entitlement to leave for employees.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Entitlement to leave for employees.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    type: LeaveEntitlement
+  Payroll:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: employee_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: salary
+      required: true
+      template: real
+      type: FLOAT
+    - name: pay_date
+      required: true
+      template: date
+      type: DATETIME
+    description: Payroll details for processing salaries and wages.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Payroll details for processing salaries and wages.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    type: Payroll
+  TaxDetail:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: employee_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: tax_code
+      required: true
+      template: text
+      type: VARCHAR
+    - name: tax_due_date
+      template: date
+      type: DATETIME
+    description: Tax information that employers must report and deduct.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Tax information that employers must report and deduct.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    type: TaxDetail
+  TrainingProgram:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: duration_days
+      required: true
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Training programs that new employees may need to undertake.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Training programs that new employees may need to undertake.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - training_id
+      name: EmployeeTrainingList
+      resource: EmployeeTraining
+    type: TrainingProgram
+  WorkplaceSafety:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: employer_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: safety_protocol
+      required: true
+      template: text
+      type: VARCHAR
+    description: Safety measures and trainings provided by employers.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Safety measures and trainings provided by employers.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - employer_id
+      name: employer
+      resource: Employer
+    type: WorkplaceSafety
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

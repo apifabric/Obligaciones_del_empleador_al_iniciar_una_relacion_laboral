@@ -1,0 +1,42 @@
+<o-form-layout-manager attr="WorkplaceSafety" mode="tab" title="WORKPLACESAFETY">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="WorkplaceSafetyTable" 
+            service="WorkplaceSafety" 
+            entity="WorkplaceSafety" 
+            title="WORKPLACESAFETY"
+            keys="id"
+            columns="id;employer_id;safety_protocol" 
+            header-actions="R;D"
+            visible-columns="id;employer_id;safety_protocol"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="employer_id" title="employer_id">
+    <o-table-cell-renderer-service attr="employer_id" 
+        service="Employer" entity="EmployerType" columns="id;name"
+        parent-keys="id:employer_id"
+        value-column="name" keys="employer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #safety_protocol attr="safety_protocol" title="safety_protocol" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

@@ -1,0 +1,94 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Contract {
+    id INTEGER [primary key]
+    employee_id INTEGER 
+    employer_id INTEGER 
+    start_date DATETIME 
+    end_date DATETIME 
+    }
+
+Table Employee {
+    id INTEGER [primary key]
+    name VARCHAR 
+    position VARCHAR 
+    }
+
+Table Employer {
+    id INTEGER [primary key]
+    name VARCHAR 
+    address VARCHAR 
+    }
+
+Table EmployeeHealthInsurance {
+    id INTEGER [primary key]
+    employee_id INTEGER 
+    insurance_id INTEGER 
+    }
+
+Table HealthInsurance {
+    id INTEGER [primary key]
+    provider VARCHAR 
+    policy_number VARCHAR 
+    }
+
+Table EmployeeTraining {
+    id INTEGER [primary key]
+    employee_id INTEGER 
+    training_id INTEGER 
+    completion_date DATETIME 
+    }
+
+Table TrainingProgram {
+    id INTEGER [primary key]
+    name VARCHAR 
+    duration_days INTEGER 
+    }
+
+Table EquipmentProvided {
+    id INTEGER [primary key]
+    employee_id INTEGER 
+    equipment_name VARCHAR 
+    }
+
+Table LeaveEntitlement {
+    id INTEGER [primary key]
+    employee_id INTEGER 
+    leave_days INTEGER 
+    }
+
+Table Payroll {
+    id INTEGER [primary key]
+    employee_id INTEGER 
+    salary FLOAT 
+    pay_date DATETIME 
+    }
+
+Table TaxDetail {
+    id INTEGER [primary key]
+    employee_id INTEGER 
+    tax_code VARCHAR 
+    tax_due_date DATETIME 
+    }
+
+Table WorkplaceSafety {
+    id INTEGER [primary key]
+    employer_id INTEGER 
+    safety_protocol VARCHAR 
+    }
+
+
+
+// Relationships
+    Ref: Contract.(employee_id) < Employee.(id)
+    Ref: Contract.(employer_id) < Employer.(id)
+    Ref: EmployeeHealthInsurance.(employee_id) < Employee.(id)
+    Ref: EmployeeHealthInsurance.(insurance_id) < HealthInsurance.(id)
+    Ref: EmployeeTraining.(employee_id) < Employee.(id)
+    Ref: EmployeeTraining.(training_id) < TrainingProgram.(id)
+    Ref: EquipmentProvided.(employee_id) < Employee.(id)
+    Ref: LeaveEntitlement.(employee_id) < Employee.(id)
+    Ref: Payroll.(employee_id) < Employee.(id)
+    Ref: TaxDetail.(employee_id) < Employee.(id)
+    Ref: WorkplaceSafety.(employer_id) < Employer.(id)
